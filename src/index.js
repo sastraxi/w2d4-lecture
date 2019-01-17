@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
 
-const userDatabase = require('./user-db');
+const users = require('./user-service');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -11,7 +11,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
-  const user = userDatabase.find(x => x.id === +req.cookies.user_id);
+  const user = users.find(x => x.id === +req.cookies.user_id);
   res.render('index', {
     username: user && user.name,
   });
@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
-  const user = userDatabase.find(x => x.name === username);
-  if (!user || user.password !== password) {
+  const user = users.challenge(username, password);
+  if (!user) {
     res.status(400).send('Invalid username or password.');  
   }
 

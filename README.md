@@ -31,10 +31,21 @@ Two branches:
 
 ## Really basic authentication
 * login form, username and password, app middleware is already done
+* build user-db `[{ id, name, password }]`
 * make a `POST` endpoint for the login form
-  * look up username in an object and the password matches
+  * look up username in an db and the password matches
   * set cookie `username => bill`
   * show a 400 error if the user can't found / password does not match
   * why doesn't it work? well, we need to pass username to template
     * `const user = userDatabase.find(x => x.id === +req.cookies.user_id)`, 
     * `user && user.name`
+
+# bcrypt
+* why not plaintext?
+* refactor userDatabase into userService
+* hash passwords
+  * `genSaltSync(rounds)`, `hashSync(plain, salt)`
+* `all`
+* `find: predicate => users.find(predicate)`,
+* `challenge(username, password)`
+  * `compareSync(plain, hashed)`
