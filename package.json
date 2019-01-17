@@ -1,0 +1,12 @@
+{
+  "name": "w2d4-lecture",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/sastraxi/w2d4-lecture",
+  "author": "Cameron Gorrie <sastraxi@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4"
+  }
+}
