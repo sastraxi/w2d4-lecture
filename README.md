@@ -94,3 +94,13 @@ Two branches:
   * Encryption (two way): Cookie Encryption
   * Public Key Crypto: HTTPS
 * tradeoffs of different session storage: https://gist.github.com/jcasimir/1210255
+
+## server-side sessions (extra)
+* `yarn add uuid`
+* `req.session.id`
+* create `session-service.js`
+  * `require('uuid/v4')`
+  * `all`
+  * `get(id)`
+  * `create`
+  * `remove`

@@ -9,6 +9,7 @@ const cookieSession = require('cookie-session');
 const port = process.env.PORT || 3000;
 
 const users = require('./user-service');
+const sessions = require('./session-service');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -20,7 +21,8 @@ app.use(cookieSession({
 }));
 
 app.get('/', (req, res) => {
-  const user = users.find(x => x.id === +req.session.user_id);
+  const session = sessions.get(req.session.id);
+  const user = session && users.find(x => x.id === +session.user_id);
   res.render('index', {
     username: user && user.name,
   });
@@ -35,11 +37,14 @@ app.post('/login', (req, res) => {
     return;
   }
 
-  req.session.user_id = user.id;
+  req.session.id = sessions.create({ user_id: user.id });
   res.redirect('/');
 });
 
 app.post('/logout', (req, res) => {
+  if (req.session.session_id) {
+    sessions.delete(req.session.id);
+  }
   req.session = null;
   res.redirect('/');
 });
