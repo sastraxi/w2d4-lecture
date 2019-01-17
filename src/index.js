@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -12,7 +14,10 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieSession({ secret: process.env.SESSION_SECRET }));
+app.use(cookieSession({
+  secret: process.env.SESSION_SECRET,
+  secure: true,
+}));
 
 app.get('/', (req, res) => {
   const user = users.find(x => x.id === +req.session.user_id);
@@ -38,5 +43,10 @@ app.post('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.listen(port, () =>
-  console.log(`w2d4 lecture running on localhost:${port}`));
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert'),
+}, app)
+  .listen(port, () => {
+    console.log(`w2d4 lecture running on https://localhost:${port}`)
+  });

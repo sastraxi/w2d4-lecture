@@ -40,7 +40,7 @@ Two branches:
     * `const user = userDatabase.find(x => x.id === +req.cookies.user_id)`, 
     * `user && user.name`
 
-# bcrypt
+## bcrypt
 * why not plaintext?
 * refactor userDatabase into userService
 * hash passwords
@@ -50,7 +50,7 @@ Two branches:
 * `challenge(username, password)`
   * `compareSync(plain, hashed)`
 
-# use cookie-session to prevent tampering
+## use cookie-session to prevent tampering
 * show them in Chrome inspector
 * introduce https://www.npmjs.com/package/cookie-session
   * `yarn add cookie-session`
@@ -61,3 +61,14 @@ Two branches:
   * let's try to break it
     * `echo <hashed> | base64 -d`
     * `echo {\"user_id\":1} | base64 -w 0`
+
+## cookies can be snooped by other people on the network!
+* solution: HTTPS!
+* set `{ secure: true }` to only set cookies under HTTPS, see it's broken
+* `https` module to set up secure server
+  * `https.createServer({ key, cert }, app).listen(port, () => ...)`
+  * `fs.readFileSync(path)`
+* build a self-signed cert
+  * `openssl req -nodes -new -x509 -keyout server.key -out server.cert`
+  * add to `.gitignore`
+* get a real certificate from Let's Encrypt!
