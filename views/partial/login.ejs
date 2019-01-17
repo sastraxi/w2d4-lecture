@@ -1,0 +1,20 @@
+<% if (!username) { %>
+  <form action="/login" method="post">
+    <input
+      type="text"
+      name="username"
+      placeholder="Username"
+    /><br>
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+    /><br>
+    <input type="submit" value="Login" />
+  </form>
+<% } else { %>
+  <p>Logged in as <%= username %>.</p>
+  <form action="/logout" method="post">
+    <input type="submit" value="Logout" />
+  </form>
+<% } %>

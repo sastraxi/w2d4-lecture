@@ -30,6 +30,9 @@ Two branches:
 * Chrome Inspector > Application > Cookies > (domain)
 
 ## Identity in Cookies
-* make a `POST` endpoint for a login form
-* make a login form, username and password
-* `user_id => 15`
+* login form, username and password, app middleware is already done
+* make a `POST` endpoint for the login form
+  * look up username in an object
+  * set cookie `user_id => user.id`
+
+

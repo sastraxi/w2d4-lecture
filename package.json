@@ -5,8 +5,13 @@
   "repository": "https://github.com/sastraxi/w2d4-lecture",
   "author": "Cameron Gorrie <sastraxi@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
+    "ejs": "^2.6.1",
     "express": "^4.16.4"
   }
 }
