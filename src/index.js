@@ -32,6 +32,7 @@ app.post('/login', (req, res) => {
   const user = users.challenge(username, password);
   if (!user) {
     res.status(400).send('Invalid username or password.');  
+    return;
   }
 
   req.session.user_id = user.id;
