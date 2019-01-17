@@ -3,15 +3,35 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
 
+const userDatabase = require('./user-db');
+
 const app = express();
 app.set('view engine', 'ejs');
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
+  const user = userDatabase.find(x => x.id === +req.cookies.user_id);
   res.render('index', {
-    username: null,
+    username: user && user.name,
   });
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  const user = userDatabase.find(x => x.name === username);
+  if (!user || user.password !== password) {
+    res.status(400).send('Invalid username or password.');  
+  }
+
+  res.cookie('user_id', user.id);
+  res.redirect('/');
+});
+
+app.post('/logout', (req, res) => {
+  res.clearCookie('user_id');
+  res.redirect('/');
 });
 
 app.listen(port, () =>

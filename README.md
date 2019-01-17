@@ -29,10 +29,12 @@ Two branches:
   * client-side: `browser.cookies.set({ name: 'username' })`
 * Chrome Inspector > Application > Cookies > (domain)
 
-## Identity in Cookies
+## Really basic authentication
 * login form, username and password, app middleware is already done
 * make a `POST` endpoint for the login form
-  * look up username in an object
-  * set cookie `user_id => user.id`
-
-
+  * look up username in an object and the password matches
+  * set cookie `username => bill`
+  * show a 400 error if the user can't found / password does not match
+  * why doesn't it work? well, we need to pass username to template
+    * `const user = userDatabase.find(x => x.id === +req.cookies.user_id)`, 
+    * `user && user.name`
