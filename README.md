@@ -34,7 +34,7 @@ Two branches:
 * build user-db `[{ id, name, password }]`
 * make a `POST` endpoint for the login form
   * look up username in an db and the password matches
-  * set cookie `username => bill`
+  * set cookie `user_id => 2`
   * show a 400 error if the user can't found / password does not match
   * why doesn't it work? well, we need to pass username to template
     * `const user = userDatabase.find(x => x.id === +req.cookies.user_id)`, 
@@ -49,3 +49,15 @@ Two branches:
 * `find: predicate => users.find(predicate)`,
 * `challenge(username, password)`
   * `compareSync(plain, hashed)`
+
+# use cookie-session to prevent tampering
+* show them in Chrome inspector
+* introduce https://www.npmjs.com/package/cookie-session
+  * `yarn add cookie-session`
+  * `yarn add dotenv` and `require('dotenv').config()`
+  * just set a secret and use `req.session` instead. Note: `req` not `res`!
+  * add `.env`, `.env.example` and add to `.gitignore`
+  * `process.env.SESSION_SECRET`
+  * let's try to break it
+    * `echo <hashed> | base64 -d`
+    * `echo {\"user_id\":1} | base64 -w 0`
