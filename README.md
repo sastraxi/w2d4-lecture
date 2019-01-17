@@ -72,3 +72,25 @@ Two branches:
   * `openssl req -nodes -new -x509 -keyout server.key -out server.cert`
   * add to `.gitignore`
 * get a real certificate from Let's Encrypt!
+
+## cookie summary
+* When to use...
+* plain cookies:
+  * *almost never use plain cookies*
+  * maybe for:
+  * language selection
+  * shopping cart for non-logged in users
+  * analytics
+* encrypted cookies:
+  * do this by default
+  * only store user_id (rest can go in database)
+* server-side sessions
+  * not worth hassle for small projects
+  * if you need to store lots of session data
+  * if you frequently change session data
+  * you want the ability to invalidate specific users' sessions
+* Types of Cryptography:
+  * Hashing (one way): Password Encryption
+  * Encryption (two way): Cookie Encryption
+  * Public Key Crypto: HTTPS
+* tradeoffs of different session storage: https://gist.github.com/jcasimir/1210255
