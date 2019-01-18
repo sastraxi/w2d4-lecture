@@ -8,6 +8,11 @@ Two branches:
 * `master` contains sample code that demonstrates various auth techniques
 * `live-coding` contains a barebones express stub
 
+## To run the finished product
+1. `git checkout master`
+2. `openssl req -nodes -new -x509 -keyout server.key -out server.cert`
+3. `cp .env.example .env`
+
 # Teacher's Notes
 
 ## HTTP is Stateless
